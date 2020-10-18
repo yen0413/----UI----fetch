@@ -31,6 +31,11 @@
             flex-direction: row-reverse;
         }
 
+        .icon_right {
+            display: flex;
+            justify-content: space-between;
+        }
+
         .button_margin {
             margin: 10px;
         }
@@ -182,7 +187,12 @@
                     </figure>
 
                     <div class="media-body">
-                        <h5 class="mt-0" id="title">title</h5>
+                        <div class="icon_right">
+                            <h5 class="mt-0" id="title">title</h5>
+                            <a href="/api/API/${tpl.fID}">
+                                <i class="fas fa-edit button_margin" style="color:gray"></i>
+                            </a>
+                        </div>
                         <p id="content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
                             sollicitudin.
                             Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
@@ -259,6 +269,8 @@
 
 
     <!-- JS here -->
+
+
 
     <!-- All JS Custom Plugins Link Here here -->
     <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>

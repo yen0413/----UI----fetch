@@ -39,6 +39,11 @@
             margin-top: 40px;
         }
 
+        .icon_right {
+            display: flex;
+            justify-content: space-between;
+        }
+
         /* .footer-end-social a,
         .footer_link a {
             font-size: 120%;
@@ -163,16 +168,16 @@
             </div> -->
             <div class="main_range">
                 <div class="form-group">
-                    <input class="form-control" type="text" id="get-title" placeholder="請填標題！">
+                    <input class="form-control" type="text" required id="get-title" placeholder="請填標題！">
                     <p></p>
                     <textarea class="form-control" id="get-content" placeholder="請填寫內容!" rows="4"></textarea>
-                </div>
-                <div class="push_right">
-                    <button type="submit" class="btn btn-secondary button_margin" id="post-btn">發佈</button>
-                    <!--<button type="submit" class="btn btn-secondary button_margin" id="get-btn">取得資料</button> -->
 
-                </div>
+                    <div class="push_right">
+                        <input type="submit" class="btn btn-secondary button_margin" id="post-btn" value="發佈">
+                        <!--<button type="submit" class="btn btn-secondary button_margin" id="get-btn">取得資料</button> -->
 
+                    </div>
+                </div>
                 <p id="tpl"></p>
                 <p id="tpl_message"></p>
             </div>
