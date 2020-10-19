@@ -152,8 +152,9 @@ const sendData = () => {
 
 //==================TODO==================字串裡塞變數????    後端需加接message的程式碼
 //post message data
+const url = `https://localhost:44310/api/API/?id=${id}`
 const sendMessageData = () => {
-    sendHttpRequest('post', 'https://localhost:44310/api/API', {
+    sendHttpRequest('post', 'url', {
         "id": tpl.fID,
         "message.fmessage": document.getElementById('${tpl.fID}').value
 
