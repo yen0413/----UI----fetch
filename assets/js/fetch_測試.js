@@ -64,7 +64,7 @@ const content_tpl = tpl => {
                             <button type="button" class="btn btn-primary">儲存</button>
                         </div>
                     </div>
- 
+                </div>
             </div>
         </div>        
     </div>
