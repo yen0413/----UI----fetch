@@ -33,38 +33,11 @@ const content_tpl = tpl => {
             <div class="icon_right">
                 <h5 class="mt-0" id="title">標題 : ${tpl.fTitle}</h5>
                 
-                <a href="localhost:44310/api/API/${tpl.fID}" data-toggle="modal" data-target="#editMessage">
+                <a href="localhost:44310/api/API/${tpl.fID}" data-id="${tpl.fID}" data-toggle="modal" data-target="#editMessage">
                     <i class="fas fa-edit button_margin" style="color:gray" data-target="#editMessage"></i>
                 </a>
      
-                <div class="modal fade" id="editMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">更改發文</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">標題:</label>
-                                    <input type="text" class="form-control" id="editTitle${tpl.fID}" value="${tpl.fTitle}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">內容:</label>
-                                    <textarea class="form-control" id="editContent${tpl.fID}">${tpl.fContent}</textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                            <button type="button" class="btn btn-primary">儲存</button>
-                        </div>
-                    </div>
-                </div>
+                
             </div>
         </div>        
     </div>
