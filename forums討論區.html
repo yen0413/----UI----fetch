@@ -179,31 +179,60 @@
                 </div>
 
                 <p></p>
-
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">修改發文內容</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form>
+                                        <div class="form-group">
+                                            <label for="recipient-name" class="col-form-label">標題:</label>
+                                            <input type="text" class="form-control" id="recipient-name" value="${tpl.fTitle}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="message-text" class="col-form-label">內容:</label>
+                                            <textarea class="form-control" id="message-text">${tpl.fContent}</textarea>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                                        <button type="button" class="btn btn-primary">儲存</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
                 <div class="media main_BCC">
                     <figure class="figure_range">
                         <img src="assets/img/blog/匿名頭像1.jpg" class="align-self-start mr-3" alt="...">
-                        <figcaption>Yo</figcaption>
+                        <figcaption>${tpl.fName}</figcaption>
                     </figure>
 
                     <div class="media-body">
                         <div class="icon_right">
-                            <h5 class="mt-0" id="title">title</h5>
-                            <a href="/api/API/${tpl.fID}">
+                            <h5 class="mt-0" id="title">標題 : ${tpl.fTitle}</h5>
+                            <a href="/api/API/${tpl.fID}" data-target="#exampleModal" data-toggle="modal">
                                 <i class="fas fa-edit button_margin" style="color:gray"></i>
                             </a>
+                            <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button> -->
+
+
+                            
                         </div>
-                        <p id="content">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                            sollicitudin.
-                            Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc
-                            ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                        <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque
-                            penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                        <p>第${tpl.fID}篇  文章類型 : ${tpl.fType}</p>  
+                        <p></p>
+                        <p id="content">${tpl.fContent}</p>
+
                         <div class="input-group ">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">Lin</div>
                             </div>
-                            <input type="text" class="form-control text_mragin" id="inlineFormInputGroupUsername"
+                            <input type="text" class="form-control text_mragin" id="${tpl.fID}"  name="${tpl.fID}"
                                 placeholder="留言......">
                         </div>
                         <p></p>
@@ -215,17 +244,10 @@
                         <div class="response_range">
                             <figure>
                                 <img src="assets/img/blog/頭像2.jpg" class="align-self-start mr-3" alt="...">
-                                <figcaption>Lin</figcaption>
+                                <figcaption>${o.fMName}</figcaption>
                             </figure>
 
-                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante
-                                sollicitudin.
-                                Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum
-                                nunc
-                                ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                                Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis
-                                natoque
-                                penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                            <p>${o.fMContent}</p>
                         </div>
                     </div>
 

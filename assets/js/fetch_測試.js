@@ -1,5 +1,13 @@
+const modal_form = document.getElementById('modal_form'), 
+    recipient_name = document.getElementById('recipient-name'),
+    message_text = document.getElementById('message-text'),
+    edit_put = document.getElementById('edit-put');
+
+let currentPost;
+let count = 0;
 //const getBtn = document.getElementById('get-btn');
 const postBtn = document.getElementById('post-btn');
+//const putBtn = document.getElementById('edit-put');
 const request = new XMLHttpRequest();
 
 const sendHttpRequest = (method, url, data) => {  //fetch的上半部整理成function
@@ -32,52 +40,25 @@ const content_tpl = tpl => {
         <div class="media-body">
             <div class="icon_right">
                 <h5 class="mt-0" id="title">標題 : ${tpl.fTitle}</h5>
+                <div id="btn_container" data-id="${tpl.fID}">
+                    <a href="localhost:44310/api/API/${tpl.fID}" id="edit${tpl.fID}" onclick="getData_edit(${tpl.fID})" data-toggle="modal" data-target="#editMessage">
+                        <i class="fas fa-edit button_margin" style="color:gray" data-target="#editMessage"></i>
+                    </a>        
+                </div>
                 
-                <a href="localhost:44310/api/API/${tpl.fID}" data-toggle="modal" data-target="#editMessage">
-                    <i class="fas fa-edit button_margin" style="color:gray" data-target="#editMessage"></i>
-                </a>
-     
-                <div class="modal fade" id="editMessage" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">更改發文</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="form-group">
-                                    <label for="recipient-name" class="col-form-label">標題:</label>
-                                    <input type="text" class="form-control" id="editTitle${tpl.fID}" value="${tpl.fTitle}">
-                                </div>
-                                <div class="form-group">
-                                    <label for="message-text" class="col-form-label">內容:</label>
-                                    <textarea class="form-control" id="editContent${tpl.fID}">${tpl.fContent}</textarea>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                            <button type="button" class="btn btn-primary">儲存</button>
-                        </div>
-                    </div>
- 
             </div>
-        </div>        
-    </div>
+               
+    
             <p>第${tpl.fID}篇  文章類型 : ${tpl.fType}</p>             
             <p></p>
             <p id="content">${tpl.fContent}</p>
+            <p>發文時間 : ${tpl.fdate}</p>
             <div class="input-group ">
-            <div class="input-group-prepend">
-                <div class="input-group-text">留言</div>
+                <div class="input-group-prepend">
+                    <div class="input-group-text">留言</div>
+                </div>
+                <input type="text" class="form-control text_mragin" id="${tpl.fID}" name="${tpl.fID}" placeholder="留言......">
             </div>
-            <input type="text" class="form-control text_mragin" id="${tpl.fID}" name="${tpl.fID}" placeholder="留言......">
-            </div>
-            <p></p>
             <div class="push_right">
                 <button type="submit" class="btn btn-secondary button_margin" id="post-Mbtn">留言</button>
                 <!-- <button type="submit" class="btn btn-secondary button_margin">加入圖片</button> -->
@@ -92,29 +73,29 @@ const content_tpl = tpl => {
                     <figcaption>${o.fMName}</figcaption>
                 </figure>
                 <p>${o.fMContent}</p>
-            </div>           
+            </div> 
             `
     ).join(" ")} 
+            </div>           
         </div>
+        <P></P>
     </div>
-    <P></P>
-    
     ` ;
 };
+
 //無法用forEach?
 
-//------edit template------
-// function openwin() {
-//     window.open("https://gank.io/api", "", "height=100, width=400, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no");
-// }
 
 
+//=============get data===============
 const getData = () => {
     sendHttpRequest('get', 'https://localhost:44310/api/API')
         .then(responseData => {
             let str = '';
             responseData.ftable.forEach(i => {
-                str += content_tpl(i);
+                count=i.count;
+                str += content_tpl(i);               
+                console.log(i.count);
             })
             $('#tpl').html(str);
             //console.log(responseData);
@@ -122,9 +103,64 @@ const getData = () => {
             postMessageBtn.addEventListener('click', sendMessageData);
         })
 };
+
+
+
+
+
+
 //server自動取出資料
 request.onload = getData();
+//=============get edit============
+const getData_edit = (fid) => {
+    let UrlGetID = `https://localhost:44310/api/API/${fid}`
+    sendHttpRequest('get', UrlGetID)
+        .then(responseData => {
+            // console.log('responseData:', responseData);
+            responseData.ftable.forEach(i => {
+                
+                currentPost = i;
+                console.log({currentPost});
+                modal_form.setAttribute('data-id', i.fID);
+                document.getElementById('recipient-name').value = i.fTitle;
+                document.getElementById('message-text').value = i.fContent;
+                document.getElementById('edit-put').data = i.fID;
+            })
+           
+            // $('#tpl').html(str);
+            // //console.log(responseData);
+            // const postMessageBtn = document.getElementById('post-Mbtn');
+            // postMessageBtn.addEventListener('click', sendMessageData);
+        })
+};
+//server自動取出資料
+//request.onload = getData_edit();
+//request.onload = getData();
 
+
+//============put edit==========
+const putEditData = () => {
+    // currentPost.iID
+    console.log('fid:', currentPost.fID);
+    let UrlPutID = `https://localhost:44310/api/API/?id=${currentPost.fID}`
+    sendHttpRequest('Put', UrlPutID, {
+        "title": document.getElementById('recipient-name').value,
+        "content": document.getElementById('message-text').value
+    }).then(responseData => {
+        console.log(document.getElementById('message-text').value);
+        console.log(responseData);
+        //console.log(typeof responseData);
+        //console.log(tpl.fID);
+        //console.log(message.fmessage);
+        request.onload = getData();
+    }).catch(err => {
+        console.log(err, err.data);
+    });
+
+};
+
+
+//=======================send Data=========================
 const sendData = () => {
     if (!document.getElementById("get-title").value) {
         alert('請填入標題!');
@@ -170,9 +206,14 @@ const sendMessageData = () => {
 };
 
 
+
 //getBtn.addEventListener('click', getData);
 postBtn.addEventListener('click', sendData);
 postBtn.addEventListener('click', getData);
+//putBtn.addEventListener('click', putEditData(tpl.fID))
+
+
+//getEditBtn.addEventListener('click', getData_edit(fid));
 // function getValue() {
 //     var content = document.getElementById("get-content").value;
 //     console.log(content);

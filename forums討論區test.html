@@ -7,7 +7,7 @@
     <title>forums討論區 test</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="manifest" href="site.webmanifest">
+    <!-- <link rel="manifest" href="site.webmanifest"> -->
     <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 
@@ -17,14 +17,13 @@
     <link rel="stylesheet" href="assets/css/flaticon.css">
     <link rel="stylesheet" href="assets/css/slicknav.css">
     <link rel="stylesheet" href="assets/css/animate.min.css">
-    <link rel="stylesheet" href="assets/css/magnific-popup.css">
     <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
     <link rel="stylesheet" href="assets/css/slick.css">
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-free-5.14.0-web/css/all.css">
-    <script src="assets/js/fetch_測試.js" defer></script>
+
     <style>
         .push_right {
             display: flex;
@@ -214,8 +213,35 @@
         </div>
     </footer>
 
-
-
+    <!--===================================edit dialog================================================-->
+    <div class="modal fade" id="editMessage" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">修改發文內容</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="modal_form">
+                        <div class="form-group">
+                            <label for="recipient-name" class="col-form-label">標題:</label>
+                            <input type="text" class="form-control" id="recipient-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="message-text" class="col-form-label">內容:</label>
+                            <textarea class="form-control" id="message-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                    <button type="button" class="btn btn-primary" id="edit-put" data-id="" onclick="putEditData()">儲存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <!-- JS here -->
@@ -259,7 +285,7 @@
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
 
-
+    <script src="assets/js/fetch_測試.js" defer></script>
 </body>
 
 </html>
