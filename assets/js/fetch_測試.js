@@ -41,7 +41,7 @@ const content_tpl = tpl => {
         <div class="media-body">
             <div class="icon_right">
                 <h5 class="mt-0" id="title">標題 : ${tpl.fTitle}</h5>
-                <div id="btn_container" data-id="${tpl.fID}">
+                <div id="btn_container" data-id="${tpl.fID}" style="display:">
                     <a href="localhost:44310/api/API/${tpl.fID}" id="edit${tpl.fID}" onclick="getData_edit(${tpl.fID})" data-toggle="modal" data-target="#editMessage">
                         <i class="fas fa-edit button_margin" style="color:gray" data-target="#editMessage"></i>
                     </a>
@@ -187,7 +187,6 @@ const putEditData = () => {
 
 };
 
-
 //=======================send Data=========================
 const sendData = () => {
     if (!document.getElementById("get-title").value) {
@@ -212,9 +211,6 @@ const sendData = () => {
     }
 };
 
-
-
-//==================TODO==================字串裡塞變數????    後端需加接message的程式碼
 //post message data
 const sendMessageData = (fid) => {
     let content = `post-Message${fid}`
@@ -238,16 +234,6 @@ const sendMessageData = (fid) => {
 
 };
 
-
-
 //getBtn.addEventListener('click', getData);
 postBtn.addEventListener('click', sendData);
 postBtn.addEventListener('click', getData);
-
-
-
-//getEditBtn.addEventListener('click', getData_edit(fid));
-// function getValue() {
-//     var content = document.getElementById("get-content").value;
-//     console.log(content);
-//}
