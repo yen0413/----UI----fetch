@@ -1,8 +1,8 @@
-const modal_form = document.getElementById('modal_form'), 
+const modal_form = document.getElementById('modal_form'),
     recipient_name = document.getElementById('recipient-name'),
     message_text = document.getElementById('message-text'),
     edit_put = document.getElementById('edit-put');
-   
+
 
 let currentPost;
 let currentPost_de;
@@ -56,9 +56,12 @@ const content_tpl = tpl => {
             <p>第${tpl.fID}篇  文章類型 : ${tpl.fType}</p>             
             <p></p>
             <p id="content">${tpl.fContent}</p>
-            <img src="assets/img/service/services3.jpg" class="align-self-start mr-3" style="width:330px;length:290px" alt="...">
-            <img src="assets/img/service/services4.jpg" class="align-self-start mr-3" style="width:330px;length:290px" alt="...">
-            <img src="assets/img/service/services5.jpg" class="align-self-start mr-3" style="width:330px;length:290px" alt="...">
+            ${tpl.picture.pic.map(p => `
+                <img src="${p.pic}" class="align-self-start mr-3" style="width:330px;length:290px;border-radious:20px" alt="..."></img> 
+                <!--<img src="${p.pic}" class="align-self-start mr-3" style="width:330px;length:290px;border-radious:20px" alt="..."></img> -->
+                <!--<img src="assets/img/service/services5.jpg" class="align-self-start mr-3" style="width:330px;length:290px" alt="..."></img> -->               
+                `).join(" ")
+        }
             <p>發文時間 : ${tpl.fdate}</p>
             <div class="input-group ">
                 <div class="input-group-prepend">
@@ -73,7 +76,7 @@ const content_tpl = tpl => {
             <P></P> 
             
             ${tpl.message.fmessage.map(o =>
-        `           
+            `           
             <div class="response_range">
                 <figure>
                     <img src="assets/img/blog/頭像2.jpg" class="align-self-start mr-3" alt="...">
@@ -81,12 +84,12 @@ const content_tpl = tpl => {
                 </figure>
                 <div>
                     <p>${o.fMContent}</p>
-                    <p>o.fMesTime</p>
+                    <p>${o.fMesTime}</p>
                 </div>
                 
             </div> 
             `
-    ).join(" ")} 
+        ).join(" ")} 
             </div>           
         </div>
         <P></P>
@@ -103,9 +106,9 @@ const getData = () => {
     sendHttpRequest('get', 'https://localhost:44310/api/API')
         .then(responseData => {
             let str = '';
-            responseData.ftable.forEach(i => {               
-                count=i.count;
-                str += content_tpl(i);                                             
+            responseData.ftable.forEach(i => {
+                count = i.count;
+                str += content_tpl(i);
             })
             $('#tpl').html(str);
             //console.log(responseData);
@@ -116,21 +119,36 @@ const getData = () => {
 
 //==============delete data==============
 const getData_delete = (fid) => {
-    confirm("確定要刪除嗎?");
-    // currentPost.iID
-    console.log('fid:',fid);
-    let UrlPutID = `https://localhost:44310/api/API/?id=${fid}`
-    sendHttpRequest('delete', UrlPutID, {
-        "delete":"delete"
-    }).then(responseData => {
-        console.log(responseData);
-        //console.log(typeof responseData);
-        //console.log(tpl.fID);
-        //console.log(message.fmessage);
-        request.onload = getData();
-    }).catch(err => {
-        console.log(err, err.data);
-    });
+    swal({
+        title: "確定要刪除?",
+        //text: "Once deleted, you will not be able to recover this imaginary file!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                let UrlPutID = `https://localhost:44310/api/API/?id=${fid}`
+                sendHttpRequest('delete', UrlPutID, {
+                    "delete": "delete"
+                }).then(responseData => {
+                    console.log(responseData);
+                    //console.log(typeof responseData);
+                    //console.log(tpl.fID);
+                    //console.log(message.fmessage);
+                    request.onload = getData();
+                }).catch(err => {
+                    console.log(err, err.data);
+                });
+
+            } else {
+                return
+                //swal("Your imaginary file is safe!");
+            }
+        });
+
+
+
 
 };
 
@@ -146,15 +164,15 @@ const getData_edit = (fid) => {
         .then(responseData => {
             // console.log('responseData:', responseData);
             responseData.ftable.forEach(i => {
-                
+
                 currentPost = i;
-                console.log({currentPost});
+                console.log({ currentPost });
                 modal_form.setAttribute('data-id', i.fID);
                 document.getElementById('recipient-name').value = i.fTitle;
                 document.getElementById('message-text').value = i.fContent;
                 document.getElementById('edit-put').data = i.fID;
             })
-           
+
             // $('#tpl').html(str);
             // //console.log(responseData);
             // const postMessageBtn = document.getElementById('post-Mbtn');
@@ -187,22 +205,28 @@ const putEditData = () => {
 
 };
 
-//=======================send Data=========================
+//=======================Post Data=========================
 const sendData = () => {
     if (!document.getElementById("get-title").value) {
-        alert('請填入標題!');
+        swal("提醒", "請填寫標題!", "warning");
     }
     else if (!document.getElementById("get-content").value) {
-        alert('請填入內容!');
+        swal("提醒", "請填寫文章內容!", "warning");
     }
     else {
         sendHttpRequest('post', 'https://localhost:44310/api/API', {
             "title": document.getElementById("get-title").value,  //data的格式取決於要post出去的項目格式
             "content": document.getElementById("get-content").value,
-            //"pic1": XXX
+            "pic1": document.getElementById("uploadPic").value,
         }).then(responseData => {
+            //console.log(document.getElementById("uploadPic").value)
             console.log(responseData);
-            console.log(typeof responseData);
+            //console.log(typeof responseData);
+            swal("發文成功!", "success");
+            //清空輸入內容
+            document.getElementById("get-title").value = "";
+            document.getElementById("get-content").value = "";
+            document.getElementById("img").src = "";
             //再次從server取資料
             request.onload = getData();
         }).catch(err => {
@@ -211,15 +235,15 @@ const sendData = () => {
     }
 };
 
-//post message data
+//=======================Post Message Data=========================
 const sendMessageData = (fid) => {
     let content = `post-Message${fid}`
     let UrlPutMessageID = `https://localhost:44310/api/MessageAPI/?id=${fid}`
-    if(!document.getElementById(content).value){
-        alert("請輸入留言!");
+    if (!document.getElementById(content).value) {
+        swal("提醒", "請輸入留言內容!", "warning");
         return
     }
-    sendHttpRequest('post',UrlPutMessageID, {        
+    sendHttpRequest('post', UrlPutMessageID, {
         "forumType": 4,
         "ForumID": fid,
         "content": document.getElementById(content).value
@@ -233,6 +257,78 @@ const sendMessageData = (fid) => {
     });
 
 };
+
+
+//=======================上傳圖檔=================
+
+$(document).on('change', '#PictureUrl', function () { //PictureUrl為input file 的id
+    //console.log(this.files[0]);
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjcectURL != undefined) {
+            url = window.createOjcectURL(file);
+        } else if (window.URL != undefined) {
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) {
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    var objURL = getObjectURL(this.files[0]);//objURL為input file的真實路徑
+    getBase64(objURL, (dataURL) => {
+        //console.log(dataURL);
+        document.getElementById('uploadPic').value = dataURL;
+    });
+
+    function getBase64(url, callback) {
+        //通過建構函式來建立的 img 例項，在賦予 src 值後就會立刻下載圖片，相比 createElement() 建立 <img> 省去了 append()，也就避免了文件冗餘和汙染
+        var Img = new Image(),
+            dataURL = '';
+        Img.src = url;
+        Img.setAttribute("crossOrigin", 'Anonymous')
+        Img.onload = function () { //要先確保圖片完整獲取到，這是個非同步事件
+            var canvas = document.createElement("canvas"), //建立canvas元素
+                width = Img.width, //確保canvas的尺寸和圖片一樣
+                height = Img.height;
+            canvas.width = width;
+            canvas.height = height;
+            canvas.getContext("2d").drawImage(Img, 0, 0, width, height); //將圖片繪製到canvas中
+            dataURL = canvas.toDataURL('image/jpg'); //轉換圖片為dataURL
+            callback ? callback(dataURL) : null; //呼叫回撥函式
+
+        };
+    }
+});
+
+//==============圖片預覽==========
+const myFile = document.querySelector('#PictureUrl')
+
+myFile.addEventListener('change', function (e) {
+    const file = e.target.files[0]
+    const reader = new FileReader()
+    // 轉換成 DataURL
+    reader.readAsDataURL(file)
+    //document.querySelector("#img").style.display = "true";
+
+    reader.onload = function () {
+        // 將圖片 src 替換為 DataURL
+        img.src = reader.result
+    }
+})
+
+// var url = null;
+// var fileObj = document.getElementById("PictureUrl").files[0];
+// if (window.createObjcectURL != undefined) {
+//     url = window.createOjcectURL(fileObj);
+// } else if (window.URL != undefined) {
+//     url = window.URL.createObjectURL(fileObj);
+// } else if (window.webkitURL != undefined) {
+//     url = window.webkitURL.createObjectURL(fileObj);
+// }
+
+
+
+
 
 //getBtn.addEventListener('click', getData);
 postBtn.addEventListener('click', sendData);

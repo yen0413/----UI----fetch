@@ -13,16 +13,17 @@
 
     <!-- CSS here -->
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="assets/css/flaticon.css">
+    <!-- <link rel="stylesheet" href="assets/css/owl.carousel.min.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/flaticon.css"> -->
     <link rel="stylesheet" href="assets/css/slicknav.css">
     <link rel="stylesheet" href="assets/css/animate.min.css">
     <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/themify-icons.css">
-    <link rel="stylesheet" href="assets/css/slick.css">
+    <!-- <link rel="stylesheet" href="assets/css/slick.css"> -->
     <link rel="stylesheet" href="assets/css/nice-select.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-free-5.14.0-web/css/all.css">
+
 
     <style>
         .push_right {
@@ -172,10 +173,15 @@
                     <textarea class="form-control" id="get-content" placeholder="請填寫內容!" rows="4"></textarea>
 
                     <div class="push_right">
-                        <input type="submit" class="btn btn-secondary button_margin" id="post-btn" value="發佈">
-                        <!--<button type="submit" class="btn btn-secondary button_margin" id="get-btn">取得資料</button> -->
+                        <textarea style="display: none;" id="uploadPic" rows="1"></textarea>
+                        <button type="submit" class="btn btn-secondary button_margin" id="post-btn" value="">發佈</button>
+                        <label class="btn btn-secondary button_margin"><input type="file" id="PictureUrl"
+                                accept="image/*" multiple="multiple" style="display: none;">上傳圖片</label>
 
                     </div>
+
+                    <img id="img" style="width:330px">
+
                 </div>
                 <p id="tpl"></p>
                 <p id="tpl_message"></p>
@@ -237,7 +243,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                    <button type="button" class="btn btn-primary" id="edit-put" data-id="" onclick="putEditData()">儲存</button>
+                    <button type="button" class="btn btn-primary" id="edit-put" data-id=""
+                        onclick="putEditData()">儲存</button>
                 </div>
             </div>
         </div>
@@ -284,6 +291,8 @@
     <!-- Jquery Plugins, main Jquery -->
     <script src="./assets/js/plugins.js"></script>
     <script src="./assets/js/main.js"></script>
+    <!-- sweet alert -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <script src="assets/js/fetch_測試.js" defer></script>
 </body>

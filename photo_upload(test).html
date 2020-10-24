@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <input type="file" id="PictureUrl" />
+
+
+    <script>
+        $(document).on('change', '#PictureUrl', function () { //PictureUrl為input file 的id
+            //console.log(this.files[0]);
+            function getObjectURL(file) {
+                var url = null;
+                if (window.createObjcectURL != undefined) {
+                    url = window.createOjcectURL(file);
+                } else if (window.URL != undefined) {
+                    url = window.URL.createObjectURL(file);
+                } else if (window.webkitURL != undefined) {
+                    url = window.webkitURL.createObjectURL(file);
+                }
+                return url;
+            }
+            var objURL = getObjectURL(this.files[0]);//這里的objURL就是input file的真實路徑
+            getBase64(objURL, (dataURL) => {
+                console.log(dataURL);
+            });
+        });
+
+        // var url = null;
+        // var fileObj = document.getElementById("PictureUrl").files[0];
+        // if (window.createObjcectURL != undefined) {
+        //     url = window.createOjcectURL(fileObj);
+        // } else if (window.URL != undefined) {
+        //     url = window.URL.createObjectURL(fileObj);
+        // } else if (window.webkitURL != undefined) {
+        //     url = window.webkitURL.createObjectURL(fileObj);
+        // }
+
+        function getBase64(url, callback) {
+            //通過建構函式來建立的 img 例項，在賦予 src 值後就會立刻下載圖片，相比 createElement() 建立 <img> 省去了 append()，也就避免了文件冗餘和汙染
+            var Img = new Image(),
+                dataURL = '';
+            Img.src = url;
+            Img.setAttribute("crossOrigin", 'Anonymous')
+            Img.onload = function () { //要先確保圖片完整獲取到，這是個非同步事件
+                var canvas = document.createElement("canvas"), //建立canvas元素
+                    width = Img.width, //確保canvas的尺寸和圖片一樣
+                    height = Img.height;
+                canvas.width = width;
+                canvas.height = height;
+                canvas.getContext("2d").drawImage(Img, 0, 0, width, height); //將圖片繪製到canvas中
+                dataURL = canvas.toDataURL('image/jpg'); //轉換圖片為dataURL
+                callback ? callback(dataURL) : null; //呼叫回撥函式
+
+            };
+        }
+
+
+    </script>
+
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
