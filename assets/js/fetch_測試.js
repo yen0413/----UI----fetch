@@ -120,7 +120,7 @@ const getData = () => {
 //==============delete data==============
 const getData_delete = (fid) => {
     swal({
-        title: "確定要刪除?",
+        title: "確定要刪除此篇文章?",
         //text: "Once deleted, you will not be able to recover this imaginary file!",
         icon: "warning",
         buttons: true,
@@ -146,14 +146,7 @@ const getData_delete = (fid) => {
                 //swal("Your imaginary file is safe!");
             }
         });
-
-
-
-
 };
-
-
-
 
 //server自動取出資料
 request.onload = getData();
@@ -198,6 +191,8 @@ const putEditData = () => {
         //console.log(typeof responseData);
         //console.log(tpl.fID);
         //console.log(message.fmessage);
+
+        swal("修改成功!", "", "success");
         request.onload = getData();
     }).catch(err => {
         console.log(err, err.data);
@@ -208,10 +203,14 @@ const putEditData = () => {
 //=======================Post Data=========================
 const sendData = () => {
     if (!document.getElementById("get-title").value) {
-        swal("提醒", "請填寫標題!", "warning");
+        setTimeout(function () {
+            swal("提醒", "請填寫標題!", "warning");
+        }, 1000);
     }
     else if (!document.getElementById("get-content").value) {
-        swal("提醒", "請填寫文章內容!", "warning");
+        setTimeout(function () {
+            swal("提醒", "請填寫文章內容!", "warning");
+        }, 1000);
     }
     else {
         sendHttpRequest('post', 'https://localhost:44310/api/API', {
@@ -222,7 +221,9 @@ const sendData = () => {
             //console.log(document.getElementById("uploadPic").value)
             console.log(responseData);
             //console.log(typeof responseData);
-            swal("發文成功!", "success");
+            setTimeout(function () {
+                swal("發文成功", "success");
+            }, 1000);
             //清空輸入內容
             document.getElementById("get-title").value = "";
             document.getElementById("get-content").value = "";
@@ -240,7 +241,9 @@ const sendMessageData = (fid) => {
     let content = `post-Message${fid}`
     let UrlPutMessageID = `https://localhost:44310/api/MessageAPI/?id=${fid}`
     if (!document.getElementById(content).value) {
-        swal("提醒", "請輸入留言內容!", "warning");
+        setTimeout(function () {
+            swal("提醒", "請輸入留言內容!", "warning");
+        }, 1000);
         return
     }
     sendHttpRequest('post', UrlPutMessageID, {
