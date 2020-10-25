@@ -53,14 +53,15 @@ const content_tpl = tpl => {
             </div>
                
     
-            <p>第${tpl.fID}篇  文章類型 : ${tpl.fType}</p>             
+            <p>第${tpl.fID}篇  文章類型 : ${tpl.fType}</p>
+            <lable class="like_design">按讚數 <span class="badge badge-light">4</span></lable>             
             <p></p>
             <p id="content">${tpl.fContent}</p>
             ${tpl.picture.pic.map(p => `
-                <img src="${p.pic}" class="align-self-start mr-3" style="width:330px;length:290px;border-radious:20px" alt="..."></img> 
-                <!--<img src="${p.pic}" class="align-self-start mr-3" style="width:330px;length:290px;border-radious:20px" alt="..."></img> -->
-                <!--<img src="assets/img/service/services5.jpg" class="align-self-start mr-3" style="width:330px;length:290px" alt="..."></img> -->               
-                `).join(" ")
+                <img src="${p.pic}" class="align-self-start mr-3" style="width:330px;length:290px;border-radious:20px" alt=""></img> 
+                <!--<img src="${p.pic}" class="align-self-start mr-3" style="width:330px;length:290px;border-radious:20px" alt=""></img> -->
+                <!--<img src="assets/img/service/services5.jpg" class="align-self-start mr-3" style="width:330px;length:290px" alt=""></img> -->               
+                `)
         }
             <p>發文時間 : ${tpl.fdate}</p>
             <div class="input-group ">
@@ -71,7 +72,8 @@ const content_tpl = tpl => {
                 placeholder="留言......">
             </div>
             <div class="push_right">
-                <button type="submit" class="btn btn-secondary button_margin"  id="post-Mbtn${tpl.fID}" onclick="sendMessageData(${tpl.fID})">留言</button>               
+            <button type="submit" class="btn btn-secondary button_margin"  id="post-Mbtn${tpl.fID}" onclick="sendMessageData(${tpl.fID})">留言</button>               
+            <button type="submit" class="btn btn-secondary button_margin" style="width:118px;height:44px"  id="post-Likebtn${tpl.fID}" onclick="">讚</button>    
             </div>            
             <P></P> 
             
@@ -179,8 +181,9 @@ const getData_edit = (fid) => {
 
 //============put edit==========
 const putEditData = () => {
+
     // currentPost.iID
-    console.log('fid:', currentPost.fID);
+    //console.log('fid:', currentPost.fID);
     let UrlPutID = `https://localhost:44310/api/API/?id=${currentPost.fID}`
     sendHttpRequest('Put', UrlPutID, {
         "title": document.getElementById('recipient-name').value,
@@ -191,6 +194,7 @@ const putEditData = () => {
         //console.log(typeof responseData);
         //console.log(tpl.fID);
         //console.log(message.fmessage);
+
 
         swal("修改成功!", "", "success");
         request.onload = getData();
@@ -203,14 +207,10 @@ const putEditData = () => {
 //=======================Post Data=========================
 const sendData = () => {
     if (!document.getElementById("get-title").value) {
-        setTimeout(function () {
-            swal("提醒", "請填寫標題!", "warning");
-        }, 1000);
+        swal("提醒", "請填寫標題!", "warning");
     }
     else if (!document.getElementById("get-content").value) {
-        setTimeout(function () {
-            swal("提醒", "請填寫文章內容!", "warning");
-        }, 1000);
+        swal("提醒", "請填寫文章內容!", "warning");
     }
     else {
         sendHttpRequest('post', 'https://localhost:44310/api/API', {
@@ -221,9 +221,11 @@ const sendData = () => {
             //console.log(document.getElementById("uploadPic").value)
             console.log(responseData);
             //console.log(typeof responseData);
-            setTimeout(function () {
-                swal("發文成功", "success");
-            }, 1000);
+            swal({
+                title: "發文成功!",
+                icon: "success",
+                button: "OK",
+            });
             //清空輸入內容
             document.getElementById("get-title").value = "";
             document.getElementById("get-content").value = "";
@@ -241,9 +243,7 @@ const sendMessageData = (fid) => {
     let content = `post-Message${fid}`
     let UrlPutMessageID = `https://localhost:44310/api/MessageAPI/?id=${fid}`
     if (!document.getElementById(content).value) {
-        setTimeout(function () {
-            swal("提醒", "請輸入留言內容!", "warning");
-        }, 1000);
+        swal("提醒", "請輸入留言內容!", "warning");
         return
     }
     sendHttpRequest('post', UrlPutMessageID, {

@@ -75,6 +75,13 @@
         .figure_range {
             margin: 5px;
         }
+
+        .like_design {
+            padding: 5px;
+            background-color: #014B85;
+            border-radius: 5px;
+            color: white;
+        }
     </style>
 </head>
 
@@ -174,9 +181,10 @@
 
                     <div class="push_right">
                         <textarea style="display: none;" id="uploadPic" rows="1"></textarea>
-                        <button type="submit" class="btn btn-secondary button_margin" id="post-btn" value="">發佈</button>
+                        <button type="submit" class="btn btn-secondary button_margin" style="width:148px;height:44px"
+                            id="post-btn" value="">發佈</button>
                         <label class="btn btn-secondary button_margin"><input type="file" id="PictureUrl"
-                                accept="image/*" multiple="multiple" style="display: none;">上傳圖片</label>
+                                accept="image/*" style="display: none;">上傳圖片</label> <!-- multiple="multiple" -->
 
                     </div>
 
@@ -243,8 +251,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-                    <button type="button" class="btn btn-primary" id="edit-put" data-id=""
-                        onclick="putEditData()">儲存</button>
+                    <button type="button" class="btn btn-primary" id="edit-put" data-id="" onclick="putEditData()"
+                        data-dismiss="modal">儲存</button>
                 </div>
             </div>
         </div>
