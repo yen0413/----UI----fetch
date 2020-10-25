@@ -54,7 +54,7 @@ const content_tpl = tpl => {
                
     
             <p>第${tpl.fID}篇  文章類型 : ${tpl.fType}</p>
-            <lable class="like_design">按讚數 <span class="badge badge-light">4</span></lable>             
+            <lable class="like_design">按讚數 <span class="badge badge-light" id="like${tpl.fID}">4</span></lable>             
             <p></p>
             <p id="content">${tpl.fContent}</p>
             ${tpl.picture.pic.map(p => `
@@ -73,7 +73,7 @@ const content_tpl = tpl => {
             </div>
             <div class="push_right">
             <button type="submit" class="btn btn-secondary button_margin"  id="post-Mbtn${tpl.fID}" onclick="sendMessageData(${tpl.fID})">留言</button>               
-            <button type="submit" class="btn btn-secondary button_margin" style="width:118px;height:44px"  id="post-Likebtn${tpl.fID}" onclick="">讚</button>    
+            <button type="submit" class="btn btn-secondary button_margin" style="width:118px;height:44px"  id="post-Likebtn${tpl.fID}" onclick="checkLike(${tpl.fID})">讚</button>    
             </div>            
             <P></P> 
             
@@ -194,8 +194,6 @@ const putEditData = () => {
         //console.log(typeof responseData);
         //console.log(tpl.fID);
         //console.log(message.fmessage);
-
-
         swal("修改成功!", "", "success");
         request.onload = getData();
     }).catch(err => {
@@ -237,6 +235,43 @@ const sendData = () => {
         });
     }
 };
+
+//==========================like=============================
+function checkLike(fid) {
+    //判斷登入的ID是否有在按讚過的fmb_ID裡面
+    //有的話走put沒有的話走post
+    //如何正確抓到ID?
+    //if(????){
+    //const addLike = (fid) => {
+    //     sendHttpRequest('post', 'https://localhost:44310/api/MesLike', {
+    //         "contentID": fid
+    //     }).then(responseData => {
+    //         console.log(responseData);
+    //         //console.log(typeof responseData);
+    //         //console.log(tpl.fID);
+    //         request.onload = getData();
+    //     }).catch(err => {
+    //         console.log(err, err.data);
+    //     });
+    // };
+    //}
+    // else {
+    //     const putEditData = (fid) => {
+    //         let UrlPutID = `https://localhost:44310/api/MesLike/${fid}`
+    //         sendHttpRequest('Put', UrlPutID, {
+    //             ????????????
+    //         }).then(responseData => {
+    //             request.onload = getData();
+    //         }).catch(err => {
+    //             console.log(err, err.data);
+    //         });
+
+    //     };
+    // }
+}
+
+
+
 
 //=======================Post Message Data=========================
 const sendMessageData = (fid) => {
