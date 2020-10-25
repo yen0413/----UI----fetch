@@ -53,7 +53,7 @@ const content_tpl = tpl => {
             </div>
                
     
-            <p>第${tpl.fID}篇  文章類型 : ${tpl.fType}</p>
+            <p>文章類型 : ${tpl.fType}</p> <!--第${tpl.fID}篇-->
             <lable class="like_design">按讚數 <span class="badge badge-light" id="like${tpl.fID}">4</span></lable>             
             <p></p>
             <p id="content">${tpl.fContent}</p>
