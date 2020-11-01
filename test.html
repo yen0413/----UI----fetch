@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+        integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+
+<body>
+    <button onclick="getData_edit()" type="button" class="btn btn-primary" data-toggle="modal"
+        data-target=".bd-example-modal-xl">訊息</button>
+
+    <div class="modal fade bd-example-modal-xl" id="editMessage" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <table class="table table-hover table-striped" id="datatable">
+                    <thead>
+                        <tr>
+                            <th>發文者姓名</th>
+                            <th>發文者ID</th>
+                            <th>文章標題</th>
+                            <th>文章內容</th>
+                            <th>文章日期</th>
+                            <th>刪除</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tr_forum">
+                        <tr>
+                            <td>charry</td>
+                            <td>14</td>
+                            <td>title</td>
+                            <td>content</td>
+                            <td>datetime</td>
+                            <td><button onclick="getData_delete()">刪除<i class="fas fa-trash-alt"></i></button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+
+
+    </script>
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
